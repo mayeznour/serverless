@@ -1,0 +1,48 @@
+org: nourmayez
+app: aws-node-http-api-project
+service: ticket-dev-aws-node-http-api-project
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-1
+  profile: default
+  environment:
+    DYNAMODB_USERS_TABLE: ticket-dev-myTable
+
+functions:
+  getUsers:
+    handler: todos/listUsers.listAllItemsFromDynamoDB
+    events:
+      - httpApi:
+          path: /listAllItems
+          method: get
+         
+ 
+  addUser:
+    handler: todos/createUser.putItemIntoDynamoDB
+    events:
+      - httpApi:
+          path: /putItem
+          method: post
+         
+
+  updateUser:
+    handler: todos/updateUser.updateItemInDynamoDB
+    events:
+      - httpApi:
+          path: /updateItem
+          method: patch
+          
+
+  deleteUser:
+    handler: todos/deleteUser.deleteItemFromDynamoDB
+    events:
+      - httpApi:
+          path: /deleteItem{id}
+          method: delete
+        
+
+   
+
